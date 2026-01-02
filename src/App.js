@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import FaceTracker from "./FaceTracker";
 import Avatar from "./Avatar";
 import { Canvas } from "@react-three/fiber";
@@ -11,9 +11,8 @@ function App() {
   const [countdown, setCountdown] = useState(3);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [inputUrl, setInputUrl] = useState("");
+  const expressionRef = useRef({});
 
-
-  /* ===== キャリブレーション処理 ===== */
   useEffect(() => {
     if (step !== "calibrating") return;
 
@@ -24,9 +23,10 @@ function App() {
     }, 1000);
 
     const timer = setTimeout(() => {
-      setCalibration(expression);
-      console.log("🎯 calibrated:", expression);
-      setStep("calibrated"); // ← まず完了表示へ
+      // ★ ここで「3秒後の最新表情・姿勢」を確実に取得
+      setCalibration(expressionRef.current);
+      console.log("🎯 calibrated:", expressionRef.current);
+      setStep("calibrated");
     }, 3000);
 
     return () => {
@@ -45,7 +45,10 @@ function App() {
     return () => clearTimeout(timer);
   }, [step]);
 
-
+  // expression が更新されるたびに ref に保存
+  useEffect(() => {
+    expressionRef.current = expression;
+  }, [expression]);
 
   return (
     <div className="app-root">
@@ -54,7 +57,7 @@ function App() {
       {/* ===== タイトル画面 ===== */}
       {step === "title" && (
         <div className="overlay">
-          <h1 className="title">Avatar Interaction System</h1>
+          <h1 className="title">真似っこアバター</h1>
           <p>本アプリは、表情・姿勢推定のためにカメラを使用します。<br />
              映像データは端末内でのみ処理され、外部へ送信・保存されることはありません。
           </p>
