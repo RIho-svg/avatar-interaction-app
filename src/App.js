@@ -55,12 +55,14 @@ function App() {
       {step === "title" && (
         <div className="overlay">
           <h1 className="title">Avatar Interaction System</h1>
-
+          <p>本アプリは、表情・姿勢推定のためにカメラを使用します。<br />
+             映像データは端末内でのみ処理され、外部へ送信・保存されることはありません。
+          </p>
           <button
             className="primary-btn"
             onClick={() => setStep("avatarSelect")}
           >
-            オリジナルアバターで遊ぶ
+            アバターを作成して遊ぶ
           </button>
 
           <button
@@ -125,6 +127,9 @@ function App() {
           >
             決定
           </button>
+            <button className="secondary-btn" onClick={() => setStep("title")}>
+              タイトルにもどる
+            </button>
         </div>
       )}
 
@@ -136,6 +141,9 @@ function App() {
           <p>腕を下ろし体を正面に向け、自然な表情で画面を見てください<br />（ボタンを押してから3秒後にキャリブレーションを行います）</p>
           <button className="primary-btn" onClick={() => setStep("calibrating")}>
             キャリブレーションを開始する
+          </button>
+          <button className="secondary-btn" onClick={() => setStep("title")}>
+             タイトルにもどる
           </button>
         </div>
       )}
