@@ -87,7 +87,7 @@ function App() {
 
           <p>
             <a
-              href="https://readyplayer.me/avatar?id=694fe8e4df527aeb8451cf56"
+              href="https://readyplayer.me/avatar"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "#2f00ffff", textDecoration: "underline" }}
